@@ -59,7 +59,11 @@ export class SseServerTransportProxy extends SSEServerTransport {
 
     // when the Underlying MCP Server sends a message, forward it out to the External Client
     client.onmessage = async (message) => {
-      if ("id" in message && message.id in this.originalIdMap) {
+      if (
+        "id" in message &&
+        message.id !== undefined &&
+        message.id in this.originalIdMap
+      ) {
         // Extract the original ID from the prefixed ID
         const originalId: string | number = this.originalIdMap[message.id];
 

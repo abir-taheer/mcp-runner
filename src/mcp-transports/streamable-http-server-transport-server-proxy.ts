@@ -59,7 +59,11 @@ export class StreamableHttpServerTransportServerProxy extends StreamableHTTPServ
 
     // when the Underlying MCP Server sends a message, forward it out to the External Client
     client.onmessage = async (message) => {
-      if ("id" in message && message.id in this.originalIdMap) {
+      if (
+        "id" in message &&
+        message.id !== undefined &&
+        message.id in this.originalIdMap
+      ) {
         const originalId = this.originalIdMap[message.id];
 
         this.send({
